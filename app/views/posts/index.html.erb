@@ -1,0 +1,26 @@
+<div class="container">
+    <%= form_for :post, url: posts_path, method: :post, html: { class: "form-horizontal" } do |f| %>
+    Title    : <%= f.text_field :title, class: "form-control" %><br />
+    Content  : <%= f.text_area :content, class: "form-control" %><br />
+    <%= f.submit %>
+  <% end %>
+
+  <hr>
+
+  <table>
+    <% @posts.each do |post| %>
+    <tr>
+      <td>
+          <div id="post-title-<%= post.id %>">
+            <%= post.title %> | by someone
+          </div>
+          <small><%= post.updated_at %></small>
+          <div id="post-content-<%= post.id %>">
+            <%= post.content %>
+          </div>
+          <hr>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
