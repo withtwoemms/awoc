@@ -16,9 +16,17 @@
           </div>
           <small><%= post.updated_at %></small>
           <div id="post-content-<%= post.id %>">
+            <!-- work out some way to sub link text for actual links -->
+            <!--post.content.gsub(/http:\/\/[\S]+/, link_to($1, url_for($1))) -->
             <%= post.content %>
           </div>
           <hr>
+          <td><%= form_tag post_path(post), method: :delete, class: "form-inline" do %>
+            <%= submit_tag "DELETE", class: "btn btn-default btn-sm" %>
+          <% end %></td>
+          <td><%= form_tag edit_post_path(post), method: :get, class: "form-inline" do %>
+            <%= submit_tag "EDIT", class: "btn btn-default btn-sm" %>
+          <% end %></td>
       </td>
     </tr>
     <% end %>
