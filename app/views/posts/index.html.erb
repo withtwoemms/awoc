@@ -1,5 +1,5 @@
 <div class="container">
-    <%= form_for :post, url: posts_path, method: :post, html: { class: "form-horizontal" } do |f| %>
+  <%= form_for :post, url: posts_path, method: :post, html: { class: "form-horizontal" } do |f| %>
     Title    : <%= f.text_field :title, class: "form-control" %><br />
     Content  : <%= f.text_area :content, class: "form-control" %><br />
     <%= f.submit %>
@@ -7,10 +7,10 @@
 
   <hr>
 
-  <table>
-    <% @posts.each do |post| %>
-    <tr>
-      <td>
+  <table style="width: 75%;">
+    <% @posts_with_comments.each do |post, comments| %>
+      <tr style="border-bottom: 1px dotted #eee;">
+        <td style="padding: 1em 5em 1em 0;">
           <div id="post-title-<%= post.id %>">
             <%= post.title %> | by someone
           </div>
@@ -20,15 +20,37 @@
             <!--post.content.gsub(/http:\/\/[\S]+/, link_to($1, url_for($1))) -->
             <%= post.content %>
           </div>
-          <hr>
-          <td><%= form_tag post_path(post), method: :delete, class: "form-inline" do %>
-            <%= submit_tag "DELETE", class: "btn btn-default btn-sm" %>
-          <% end %></td>
-          <td><%= form_tag edit_post_path(post), method: :get, class: "form-inline" do %>
-            <%= submit_tag "EDIT", class: "btn btn-default btn-sm" %>
-          <% end %></td>
-      </td>
-    </tr>
+        </td>
+        <td>
+          <%= form_tag post_path(post), method: :delete, class: "form-inline" do %>
+            <%= submit_tag "DELETE", class: "btn btn-sm" %>
+          <% end %>
+        </td>
+        <td>
+          <%= form_tag edit_post_path(post), method: :get, class: "form-inline" do %>
+            <%= submit_tag "EDIT", class: "btn btn-sm" %>
+          <% end %>
+        </td> 
+           
+      </tr>
+
+        <% comments.each do |comment| %>
+      <tr style="border-bottom: 1px dotted #eee;">
+            <td style="padding: 0.5em 0 1em 5em;" colspan="3">
+              <div id="comment-<%= comment.id %>">
+                <%= comment.content %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 0.5em 0 1em 5em;" colspan="3">
+          <%= form_for :comment, url: post_comments_path(post), action: :create, method: :post do |f| %>
+            Comment  : <%= f.text_area :content, class: "form-control" %><br />
+            <%= f.submit "Add Comment", class: "btn btn-default btn-sm" %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
   </table>
 </div>
