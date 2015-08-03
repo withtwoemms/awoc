@@ -1,8 +1,10 @@
 class TopicsController < ApplicationController
   def index
+    @topics = Topic.all
   end
 
   def show
+    render controller: :posts, action: :index
   end
 
   def new
