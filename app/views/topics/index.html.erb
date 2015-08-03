@@ -1,0 +1,28 @@
+<div class="container">
+	<h1>TOPICS:</h1>
+	<ul>
+		<% @topics.each do |topic| %>
+			<li>
+				<div style="display: inline-block;">
+					<%= form_tag topic_path(topic), method: :delete, class: "form-inline" do %>
+	          <%= submit_tag "DELETE", class: "btn btn-default btn-sm" %>
+	        <% end %>
+	      </div>
+	      <div style="display: inline-block;">
+	        <%= form_tag edit_topic_path(topic), method: :get, class: "form-inline" do %>
+	          <%= submit_tag "EDIT", class: "btn btn-default btn-sm" %>
+	        <% end %>
+        </div>
+				<%= link_to "#{ topic.title }", topic_posts_path(topic) %> | <%= topic.description %>
+			</li>
+		<% end %>
+	</ul>
+
+	<hr>
+
+	<%= form_for :topic, url: topics_path, method: :post, html: { class: "form-horizontal", style: "max-width: 50%;" } do |f| %>
+    Title    : <%= f.text_field :title, class: "form-control" %><br />
+    Content  : <%= f.text_area :description, class: "form-control" %><br />
+    <%= f.submit %>
+  <% end %>
+</div>
