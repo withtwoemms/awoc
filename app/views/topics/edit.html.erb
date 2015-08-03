@@ -1,2 +1,6 @@
-<h1>Topics#edit</h1>
-<p>Find me in app/views/topics/edit.html.erb</p>
+<h1>Edit Topic</h1>
+<%= form_for @topic do |f| %>
+  <p>Title: <%= f.text_field :title %></p>
+  <p>Description: <%= f.text_area :description %></p>
+	<%= f.submit  %>
+<% end %>
