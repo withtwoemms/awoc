@@ -8,7 +8,9 @@
   <hr>
 
   <table style="width: 75%;">
+
     <% @posts_with_comments.each do |post, comments| %>
+
       <tr style="border-bottom: 1px dotted #eee;">
         <td style="padding: 1em 5em 1em 0;">
           <div id="post-title-<%= post.id %>">
@@ -30,27 +32,39 @@
           <%= form_tag edit_post_path(post), method: :get, class: "form-inline" do %>
             <%= submit_tag "EDIT", class: "btn btn-sm" %>
           <% end %>
-        </td> 
-           
+        </td>          
       </tr>
 
-        <% comments.each do |comment| %>
-      <tr style="border-bottom: 1px dotted #eee;">
-            <td style="padding: 0.5em 0 1em 5em;" colspan="3">
-              <div id="comment-<%= comment.id %>">
-                <%= comment.content %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
+      <% comments.each do |comment| %>
+        <tr style="border-bottom: 1px dotted #eee;">
+
+          <td style="padding: 0.5em 0em 1em 5em; margin-right: 5em;">
+            <div id="comment-<%= comment.id %>">
+              <%= comment.content %>
+            </div>
+          </td>
+          <td style="padding: 0.5em 0 1em 0em;">
+            <%= form_tag edit_post_comment_path(post, comment), method: :get, class: "form-inline" do %>
+              <%= submit_tag "EDIT", class: "btn btn-default btn-sm" %>
+            <% end %>
+            <%= form_tag post_comment_path(post, comment), method: :delete, class: "form-inline" do %>
+              <%= submit_tag "DELETE", class: "btn btn-default btn-sm" %>
+            <% end %>
+          </td>
+
+        </tr>
+      <% end %>
+
       <tr style="border-bottom: 1px solid #eee;">
-        <td style="padding: 0.5em 0 1em 5em;" colspan="3">
+        <td style="padding: 0.5em 0 5em 5em;">
           <%= form_for :comment, url: post_comments_path(post), action: :create, method: :post do |f| %>
             Comment  : <%= f.text_area :content, class: "form-control" %><br />
             <%= f.submit "Add Comment", class: "btn btn-default btn-sm" %>
           <% end %>
         </td>
       </tr>
+
+
     <% end %>
   </table>
 </div>
